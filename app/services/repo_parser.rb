@@ -43,6 +43,17 @@ class RepoParser
     return data
   end
 
+  def get_links
+    agent = Mechanize.new
+    
+    pack_page = agent.get(@pack_url)
+    package_names =  pack_page.body.lines.select { |l| l.split.first == "Package:" }.map { |l| l.split.last }
+    
+    page = agent.get(@base_url)
+    links = page.links_with(:href => /tar.gz/).map(&:href)
+    links
+  end
+
   private
 
   def parse_entry(info)
@@ -61,16 +72,5 @@ class RepoParser
       publication_date: pck_data[:publication_date]
     )
     pck.save!
-  end
-
-  def get_links
-    agent = Mechanize.new
-    
-    pack_page = agent.get(@pack_url)
-    package_names =  pack_page.body.lines.select { |l| l.split.first == "Package:" }.map { |l| l.split.last }
-    
-    page = agent.get(@base_url)
-    links = page.links_with(:href => /tar.gz/).map(&:href)
-    links
   end
 end
