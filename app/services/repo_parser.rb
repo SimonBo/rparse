@@ -26,8 +26,12 @@ class RepoParser
           t.each do |entry|
             if(entry.full_name.include? 'DESCRIPTION')
               info = entry.read
-
-              data << parse_entry(info)
+              
+              parsed_entry = parse_entry(info)
+              
+              if package_names.include? parsed_entry[:name]
+                data << parsed_entry 
+              end
             end
           end
         end
@@ -35,6 +39,7 @@ class RepoParser
         puts 'FAILED!'
         puts link
         puts e
+        puts e.backtrace
         errors[link] = e.to_s
         next
       end
@@ -42,24 +47,28 @@ class RepoParser
     
     return data
   end
-
+  
   def get_links
     agent = Mechanize.new
-    
-    pack_page = agent.get(@pack_url)
-    package_names =  pack_page.body.lines.select { |l| l.split.first == "Package:" }.map { |l| l.split.last }
-    
     page = agent.get(@base_url)
     links = page.links_with(:href => /tar.gz/).map(&:href)
     links
   end
-
+  
+  def package_names
+    @package_names ||= begin
+      agent = Mechanize.new
+      pack_page = agent.get(@pack_url)
+      pack_page.body.lines.select { |l| l.split.first == "Package:" }.map { |l| l.split.last }
+    end
+  end
+  
   private
-
+  
   def parse_entry(info)
     EntryParser.new(entry: info).parse
   end
-
+  
   def create_or_update_package(pck_data)
     pck = Package.find_or_initialize_by(title: pck_data[:title])
     pck.assign_attributes(
@@ -70,7 +79,8 @@ class RepoParser
       maintainers: pck_data[:maintainers],
       license: pck_data[:license],
       publication_date: pck_data[:publication_date]
-    )
-    pck.save!
+      )
+      pck.save!
+    end
   end
-end
+  
