@@ -9,9 +9,9 @@ class RepoParser
   end
   
   def refresh_repos
-    data, errors = get_data
-    data.each do |k, v|
-      Package.create!(
+    data.each do |v|
+      pck = Package.find_or_initialize_by(title: v[:title])
+      pck.assign_attributes(
         description: v[:description],
         title: v[:title],
         authors: v[:authors],
@@ -19,12 +19,13 @@ class RepoParser
         maintainers: v[:maintainers],
         license: v[:license],
         publication_date: v[:publication_date]
-        )
+      )
+      pck.save!
     end
   end
   
-  def get_data(links: get_links) 
-    data = {}
+  def data(links: get_links) 
+    data = []
     errors = {}
     
     links.each do |link|
@@ -36,7 +37,7 @@ class RepoParser
             if(entry.full_name.include? 'DESCRIPTION')
               info = entry.read
 
-              data[link] = parse_entry(info)
+              data << parse_entry(info)
             end
           end
         end
@@ -49,7 +50,7 @@ class RepoParser
       end
     end
     
-    return data, errors
+    return data
   end
 
   private
