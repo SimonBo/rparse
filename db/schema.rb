@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_064717) do
   enable_extension "plpgsql"
 
   create_table "packages", force: :cascade do |t|
+    t.string "name"
     t.text "description"
     t.string "title"
     t.string "authors"

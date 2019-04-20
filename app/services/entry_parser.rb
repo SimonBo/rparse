@@ -5,6 +5,7 @@ class EntryParser
   
   def parse
     {
+      name: @entry[/(?<=Package:)(.*)(?=Type:)/m]&.strip,
       description: @entry[/(?<=Description:)(.*)(?=License:)/m]&.strip,
       title: @entry[/(?<=Title:)(.*)(?=Version:)/m]&.strip,
       authors: @entry[/(?<=Author: )(.*)(?=Maintainer:)/m]&.strip,

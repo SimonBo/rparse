@@ -6,15 +6,14 @@ RSpec.describe EntryParser do
   describe '#parse' do 
     it "parses entry to a hash" do
       result = EntryParser.new(entry: entry).parse
-      expect(result).to satisfy do |r|
-        r[:authors] == 'Scott Fortmann-Roe'
-        r[:title] == 'Accurate, Adaptable, and Accessible Error Metrics for Predictive Models'
-        r[:description] == 'Supplies tools for tabulating and analyzing the results of predictive models. The methods employed are applicable to virtually any predictive model and make comparisons between different methodologies straightforward.'
-        r[:maintainers] == 'Scott Fortmann-Roe <scottfr@berkeley.edu>'
-        r[:version] == '1.0.0'
-        r[:license] == 'GPL (>= 2)'
-        r[:publication_date] == '2015-08-16 23:05:52'.to_datetime
-      end
+      expect(result[:name]).to eq 'A3'
+      expect(result[:authors]).to eq 'Scott Fortmann-Roe'
+      expect(result[:title]).to eq 'Accurate, Adaptable, and Accessible Error Metrics for Predictive Models'
+      expect(result[:description]).to eq 'Supplies tools for tabulating and analyzing the results of predictive models. The methods employed are applicable to virtually any predictive model and make comparisons between different methodologies straightforward.'
+      expect(result[:maintainers]).to eq 'Scott Fortmann-Roe <scottfr@berkeley.edu>'
+      expect(result[:version]).to eq '1.0.0'
+      expect(result[:license]).to eq 'GPL (>= 2)'
+      expect(result[:publication_date]).to eq '2015-08-16 23:05:52'.to_datetime
     end
   end
 end
