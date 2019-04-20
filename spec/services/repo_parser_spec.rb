@@ -28,6 +28,13 @@ RSpec.describe RepoParser do
   end
 
   describe '#data' do 
-
+    it "fetches data from links" do
+      VCR.use_cassette 'packages/A3' do
+        result = parser.data(links: ['A3_1.0.0.tar.gz'])
+        expect(result.size).to eq 1
+        expect(result.first.is_a?(Hash)).to eq true
+        expect(result.first[:authors]).to eq "Scott Fortmann-Roe"
+     end
+    end
   end
 end
