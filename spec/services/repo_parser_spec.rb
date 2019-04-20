@@ -21,10 +21,13 @@ RSpec.describe RepoParser do
 
     it "updates existing packages", :focus do
       pck = Package.create!(title: 'abc', description: 'blabla')
-      puts Package.count
       allow(parser).to receive(:data) { [entry] }
 
       expect { parser.refresh_repos }.to change { pck.reload.description }.to('abc')
     end
+  end
+
+  describe '#data' do 
+
   end
 end

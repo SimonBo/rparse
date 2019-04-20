@@ -9,18 +9,8 @@ class RepoParser
   end
   
   def refresh_repos
-    data.each do |v|
-      pck = Package.find_or_initialize_by(title: v[:title])
-      pck.assign_attributes(
-        description: v[:description],
-        title: v[:title],
-        authors: v[:authors],
-        version: v[:version],
-        maintainers: v[:maintainers],
-        license: v[:license],
-        publication_date: v[:publication_date]
-      )
-      pck.save!
+    data.each do |pck_data|
+      create_or_update_package(pck_data)
     end
   end
   
@@ -57,6 +47,20 @@ class RepoParser
 
   def parse_entry(info)
     EntryParser.new(entry: info).parse
+  end
+
+  def create_or_update_package(pck_data)
+    pck = Package.find_or_initialize_by(title: pck_data[:title])
+    pck.assign_attributes(
+      description: pck_data[:description],
+      title: pck_data[:title],
+      authors: pck_data[:authors],
+      version: pck_data[:version],
+      maintainers: pck_data[:maintainers],
+      license: pck_data[:license],
+      publication_date: pck_data[:publication_date]
+    )
+    pck.save!
   end
 
   def get_links
