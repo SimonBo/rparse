@@ -52,16 +52,10 @@ class RepoParser
     return data, errors
   end
 
+  private
+
   def parse_entry(info)
-    {
-      description: info[/(?<=Description:)(.*)(?=License:)/m]&.strip,
-      title: info[/(?<=Title:)(.*)(?=Version:)/m]&.strip,
-      authors: info[/(?<=Author: )(.*)(?=Maintainer:)/m]&.strip,
-      version: info[/(?<=Version:)(.*)(?=Date:)/m]&.strip,
-      maintainers: info[/(?<=Maintainer:)(.*)(?=Description:)/m]&.strip,
-      license: info[/(?<=License:)(.*)(?=Depends:)/m]&.strip,
-      publication_date: info[/(?<=Publication:)(.*)/m]&.strip
-    }
+    EntryParser.new(entry: info).parse
   end
 
   def get_links
