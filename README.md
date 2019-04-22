@@ -1,24 +1,18 @@
-# README
+Stwórz aplikację, która będzie package managerem dla języka R.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Pakiety dla języka R znajdują się tutaj: http://cran.r-project.org/src/contrib/
+Aplikacja powinna reprezentować listę pakietów z pliku http://cran.r-project.org/src/contrib/PACKAGES
 
-Things you may want to cover:
+Zadania:
+- pobierz plik PACKAGES i sparsuj go (możesz użyć gotowego gema)
+- stwórz model reprezentujący pakiety
+- zapisz w bazie informacje o pakietach (description, title, authors, version, maintainers, license, publication date)
 
-* Ruby version
+Szczegółowe dane o konkretnych pakietach znajdują w plikach DESCRIPTION wewnątrz paczek *.tar.gz 
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Wymagania:
+- standardowa aplikacja Rails
+- baza danych (mysql/postgres/sqlite - do wyboru)
+- rake task do odświeżania danych o pakietach
+- testy
+- kontrolery, widoki i UI nie są wymagane (wystarczą same modele i obsługa danych)
