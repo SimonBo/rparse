@@ -2,7 +2,7 @@
 
 class RepoParser
   def initialize(params = {})
-    @threads = params.fetch :threads, 10
+    @threads = params.fetch :threads, 4
     @in_batches_of = params.fetch :in_batches_of, 10
     @links_array = params[:links_array] || LinkFetcher.new.fetch.each_slice(@in_batches_of).to_a
     @package_names = params[:package_names] || PackageNameFetcher.new.fetch

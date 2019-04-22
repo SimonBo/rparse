@@ -16,7 +16,7 @@ class PackageDataExtractor
     @package_names = params[:package_names] || PackageNameFetcher.new.fetch
     @entry_parser = params.fetch :entry_parser, EntryParser.new
     @result = []
-    @threads = params.fetch :threads, 10
+    @threads = params.fetch :threads, 4
   end
 
   def data
