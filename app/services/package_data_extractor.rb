@@ -54,14 +54,20 @@ class PackageDataExtractor
     t = Gem::Package::TarReader.new(Zlib::GzipReader.open(remote_file))
     t.rewind
     t.each do |entry|
-      if(entry.full_name.include? 'DESCRIPTION')
-        info = entry.read
-        parsed_entry = @entry_parser.parse(info)
-        
-        if @package_names.include? parsed_entry[:name]
-          @result << parsed_entry 
-        end
-      end
+      handle_entry(entry) if entry.full_name.include? 'DESCRIPTION'
     end
+  end
+  
+  def handle_entry(entry)
+    info = entry.read
+    parsed_entry = @entry_parser.parse(info)
+    
+    if entry_from_package_names?(parsed_entry) 
+      @result << parsed_entry 
+    end
+  end
+  
+  def entry_from_package_names?(parsed_entry)
+    @package_names.include? parsed_entry[:name]
   end
 end
