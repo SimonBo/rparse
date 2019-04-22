@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'benchmark'
 
 Benchmark.bm do |benchmark|
   links = PackageDataExtractor.new.links.first(30)
   data = PackageDataExtractor.new(links: links).data
   run_n = 100
-  
+
   [1, 10, 30, 100, 200].each do |n|
     benchmark.report("threads #{n}") do
-      run_n.times do 
+      run_n.times do
         Package.delete_all
         RepoParser.new(threads: n, package_data: data).refresh_repos
       end
