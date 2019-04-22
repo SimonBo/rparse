@@ -18,6 +18,7 @@ class RepoParser
   def create_or_update_package(pck_data)
     pck = Package.find_or_initialize_by(title: pck_data[:title])
     pck.assign_attributes(
+      name: pck_data[:name],
       description: pck_data[:description],
       title: pck_data[:title],
       authors: pck_data[:authors],
