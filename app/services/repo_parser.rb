@@ -1,6 +1,10 @@
 require 'open-uri'
 require 'rubygems/package'
 
+#enforce returning TempFile from opening urls
+OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
+OpenURI::Buffer.const_set 'StringMax', 0
+
 class RepoParser
   def initialize
     @base_url = 'https://cran.r-project.org/src/contrib/'
