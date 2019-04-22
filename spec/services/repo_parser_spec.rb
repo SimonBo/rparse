@@ -15,14 +15,15 @@ RSpec.describe RepoParser do
       publication_date: DateTime.new
     }
   end
-  let(:parser) { RepoParser.new(package_data: [entry]) }
-
+  let(:parser) { RepoParser.new(links_array: [['some_link']]) }
+  
   describe '#refresh_repos' do
     it 'creates new packages' do
       expect(Package.count).to eq 0
-
+      
+      allow(parser).to receive(:data).with(['some_link']) { [entry] }
       parser.refresh_repos
-
+      
       expect(Package.count).to eq 1
       pck = Package.first
       expect(pck.name).to eq entry[:name]
@@ -34,9 +35,10 @@ RSpec.describe RepoParser do
       expect(pck.license).to eq entry[:license]
       expect(pck.publication_date).to eq entry[:publication_date]
     end
-
+    
     it 'updates existing packages' do
       pck = Package.create!(title: 'abc', description: 'blabla')
+      allow(parser).to receive(:data).with(['some_link']) { [entry] }
 
       expect { parser.refresh_repos }.to change { pck.reload.description }.to('abc')
     end

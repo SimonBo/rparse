@@ -17,15 +17,6 @@ RSpec.describe PackageDataExtractor do
     end
   end
 
-  describe '#fetch_links' do
-    it 'fetches links to repos' do
-      VCR.use_cassette 'package_data_extractor/fetch_links' do
-        result = extractor.fetch_links
-        expect(result.find { |l| l.include?('.tar.gz') }).to be_present
-      end
-    end
-  end
-
   describe '#package_names' do
     it 'gets package names from site' do
       VCR.use_cassette 'package_data_extractor/fetch_package_names' do
