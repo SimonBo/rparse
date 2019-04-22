@@ -5,7 +5,7 @@ RSpec.describe EntryParser do
   
   describe '#parse' do 
     it "parses entry to a hash" do
-      result = EntryParser.new(entry: entry).parse
+      result = EntryParser.new.parse(entry)
       expect(result[:name]).to eq 'A3'
       expect(result[:authors]).to eq 'Scott Fortmann-Roe'
       expect(result[:title]).to eq 'Accurate, Adaptable, and Accessible Error Metrics for Predictive Models'
