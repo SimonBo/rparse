@@ -10,10 +10,11 @@ class RepoParser
     @base_url = 'https://cran.r-project.org/src/contrib/'
     @pack_url = 'https://cran.r-project.org/src/contrib/PACKAGES'
     @errors = []
+    @threads = 100
   end
   
   def refresh_repos
-    data.each do |pck_data|
+    Parallel.each(data, in_threads: @threads) do |pck_data|
       create_or_update_package(pck_data)
     end
   end

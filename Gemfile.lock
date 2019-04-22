@@ -152,6 +152,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     ntlm-http (0.1.1)
+    parallel (1.17.0)
     pg (1.1.4)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -287,6 +288,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mechanize
+  parallel
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rails (~> 5.2.2, >= 5.2.2.1)
