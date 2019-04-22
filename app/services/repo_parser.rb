@@ -14,7 +14,7 @@ class RepoParser
     end
   end
 
-    private
+  private
 
   def create_or_update_package(pck_data)
     pck = Package.find_or_initialize_by(title: pck_data[:title])
