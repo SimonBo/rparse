@@ -2,7 +2,7 @@
 
 class RepoParser
   def initialize(params = {})
-    @threads = params.fetch :threads, 100
+    @threads = params.fetch :threads, 10
     @package_data = params[:package_data] || PackageDataExtractor.new.data
   end
 
