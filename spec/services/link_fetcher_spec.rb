@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PackageDataExtractor do
+RSpec.describe LinkFetcher do
   let(:fetcher) { LinkFetcher.new }
 
   describe '#fetch' do

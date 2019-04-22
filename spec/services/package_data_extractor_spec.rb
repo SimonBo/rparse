@@ -16,14 +16,4 @@ RSpec.describe PackageDataExtractor do
       end
     end
   end
-
-  describe '#package_names' do
-    it 'gets package names from site' do
-      VCR.use_cassette 'package_data_extractor/fetch_package_names' do
-        result = extractor.fetch_package_names
-        expect(result).to be_instance_of Array
-        expect(result).to include 'A3'
-      end
-    end
-  end
 end

@@ -12,9 +12,8 @@ class PackageDataExtractor
 
   def initialize(params = {})
     @base_url = params.fetch :base_url, 'https://cran.r-project.org/src/contrib/'
-    @pack_url = params.fetch :pack_url, 'https://cran.r-project.org/src/contrib/PACKAGES'
     @links = params.fetch :links, LinkFetcher.new.fetch
-    @package_names = params.fetch :package_names, fetch_package_names
+    @package_names = params.fetch :package_names, PackageNameFetcher.new.fetch
     @entry_parser = params.fetch :entry_parser, EntryParser.new
     @result = []
     @threads = params.fetch :threads, 10
@@ -36,12 +35,6 @@ class PackageDataExtractor
     end
 
     @result
-  end
-
-  def fetch_package_names
-    agent = Mechanize.new
-    pack_page = agent.get(@pack_url)
-    pack_page.body.lines.select { |l| l.split.first == 'Package:' }.map { |l| l.split.last }
   end
 
   private
