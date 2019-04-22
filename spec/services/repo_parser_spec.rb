@@ -15,7 +15,7 @@ RSpec.describe RepoParser do
       publication_date: DateTime.new
     }
   end
-  let(:parser) { RepoParser.new(links_array: [['some_link']]) }
+  let(:parser) { RepoParser.new(links_array: [['some_link']], package_names: ['bla']) }
   
   describe '#refresh_repos' do
     it 'creates new packages' do

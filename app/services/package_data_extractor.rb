@@ -12,8 +12,8 @@ class PackageDataExtractor
 
   def initialize(params = {})
     @base_url = params.fetch :base_url, 'https://cran.r-project.org/src/contrib/'
-    @links = params.fetch :links, LinkFetcher.new.fetch
-    @package_names = params.fetch :package_names, PackageNameFetcher.new.fetch
+    @links = params[:links] || LinkFetcher.new.fetch
+    @package_names = params[:package_names] || PackageNameFetcher.new.fetch
     @entry_parser = params.fetch :entry_parser, EntryParser.new
     @result = []
     @threads = params.fetch :threads, 10

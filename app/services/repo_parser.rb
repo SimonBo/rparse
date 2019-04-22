@@ -5,6 +5,7 @@ class RepoParser
     @threads = params.fetch :threads, 10
     @in_batches_of = params.fetch :in_batches_of, 10
     @links_array = params[:links_array] || LinkFetcher.new.fetch.each_slice(@in_batches_of).to_a
+    @package_names = params[:package_names] || PackageNameFetcher.new.fetch
   end
   
   def refresh_repos    
@@ -17,21 +18,21 @@ class RepoParser
   
   def handle_links(links)
     data(links).each do |pck_data|
-      ActiveRecord::Base.connection_pool.with_connection do
-        begin 
+      begin 
+        ActiveRecord::Base.connection_pool.with_connection do
           create_or_update_package(pck_data)
-        rescue => e 
-          puts 'FAILED'
-          puts e
-          puts pck_data
-          next
         end
+      rescue => e 
+        puts 'FAILED'
+        puts e
+        puts pck_data
+        next
       end
     end
   end
   
   def data(links)
-    PackageDataExtractor.new(links: links).data
+    PackageDataExtractor.new(links: links, package_names: @package_names).data
   end
   
   def create_or_update_package(pck_data)
