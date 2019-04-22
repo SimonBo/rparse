@@ -6,11 +6,10 @@ OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined
 OpenURI::Buffer.const_set 'StringMax', 0
 
 class RepoParser
-  def initialize
-    @base_url = 'https://cran.r-project.org/src/contrib/'
-    @pack_url = 'https://cran.r-project.org/src/contrib/PACKAGES'
-    @errors = []
-    @threads = 100
+  def initialize(params = {})
+    @base_url = params.fetch :base_url, 'https://cran.r-project.org/src/contrib/'
+    @pack_url = params.fetch :pack_url, 'https://cran.r-project.org/src/contrib/PACKAGES'
+    @threads = params.fetch :threads, 100
   end
   
   def refresh_repos
@@ -21,7 +20,6 @@ class RepoParser
   
   def data(links: get_links) 
     data = []
-    errors = {}
     
     links.each do |link|
       begin
@@ -45,7 +43,6 @@ class RepoParser
         puts link
         puts e
         puts e.backtrace
-        errors[link] = e.to_s
         next
       end
     end
