@@ -17,10 +17,11 @@ class PackageDataExtractor
     @package_names = params.fetch :package_names, fetch_package_names
     @entry_parser = params.fetch :entry_parser, EntryParser.new
     @result = []
+    @threads = params.fetch :threads, 200
   end
 
   def data
-    @links.each do |link|
+    Parallel.each(@links, in_threads: @threads) do |link|
       begin
         open(@base_url + link) do |remote_file|
           parse_entry(remote_file)
