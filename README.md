@@ -1,18 +1,18 @@
-Stwórz aplikację, która będzie package managerem dla języka R.
+Create an application that will be a package manager for the language R.
 
-Pakiety dla języka R znajdują się tutaj: http://cran.r-project.org/src/contrib/
-Aplikacja powinna reprezentować listę pakietów z pliku http://cran.r-project.org/src/contrib/PACKAGES
+R language packages can be found here: http://cran.r-project.org/src/contrib/
+The application should represent the package list from the file http://cran.r-project.org/src/contrib/PACKAGES
 
-Zadania:
-- pobierz plik PACKAGES i sparsuj go (możesz użyć gotowego gema)
-- stwórz model reprezentujący pakiety
-- zapisz w bazie informacje o pakietach (description, title, authors, version, maintainers, license, publication date)
+Features:
+- download file PACKAGES and parse it (you can use ready-gem)
+- create a model representing packages
+- save package information in the database (description, title, authors, version, maintainers, license, publication date)
 
-Szczegółowe dane o konkretnych pakietach znajdują w plikach DESCRIPTION wewnątrz paczek *.tar.gz 
+Detailed data on specific packages can be found in DESCRIPTION files inside * .tar.gz packages
 
-Wymagania:
-- standardowa aplikacja Rails
-- baza danych (mysql/postgres/sqlite - do wyboru)
-- rake task do odświeżania danych o pakietach
-- testy
-- kontrolery, widoki i UI nie są wymagane (wystarczą same modele i obsługa danych)
+Requirements:
+- standard Rails application
+- database (mysql / postgres / sqlite - to choose)
+- rake task for refreshing package data
+- tests
+- controllers, views and UI are not required (models and data support only)
